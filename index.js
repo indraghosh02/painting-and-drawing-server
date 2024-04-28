@@ -58,6 +58,19 @@ async function run() {
 
 
   // user crud
+  app.get('/user', async(req,res)=>{
+    const cursor = userCollection.find();
+    const users = await cursor.toArray();
+    res.send(users)
+  })
+
+  app.get('/mycrafts', async (req, res) => {
+    const userEmail = req.query.email; // Fetch email from query parameters
+    const query = { email: userEmail }; // Query to find crafts by email
+    const crafts = await artCollection.find(query).toArray(); // Fetch all crafts that match the email
+    res.send(crafts); // Send the filtered crafts back to the client
+  });
+
   app.post('/user', async(req, res) =>{
     const user = req.body;
     console.log(user);
