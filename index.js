@@ -32,6 +32,8 @@ async function run() {
 
     const artCollection = client.db('artDB').collection('art');
     const userCollection = client.db('artDB').collection('user');
+    const subCategoryCollection = client.db('artDB').collection('sub_category ');
+    
 
     app.get('/art/:id', async (req, res) =>{
       const id = req.params.id;
@@ -79,15 +81,14 @@ async function run() {
            Customization:updatedArt.Customization, 
            time:updatedArt.time, 
            stock:updatedArt.stock, 
-           username:updatedArt.username, 
-           email:updatedArt.email
+          
       }
     }
 
     const result = await artCollection.updateOne(filter, art, options);
     res.send(result);
   })
-  
+
 
   app.delete('/art/:id', async(req, res) => {
     const id = req.params.id;
@@ -118,6 +119,26 @@ async function run() {
     const result = await userCollection.insertOne(user);
     res.send(result);
   });
+
+  //category
+   //category
+  //  app.get('/category', async(req, res) =>{
+  //   const cursor = categoryCollection.find();
+  //   const result = await cursor.toArray();
+  //   res.send(result);
+  // })
+  // Add a new route to fetch data from the sub_category collection
+app.get('/subcategories', async (req, res) => {
+  try {
+    const subCategoryCollection = client.db('artDB').collection('sub_category');
+    const subCategories = await subCategoryCollection.find().toArray();
+    res.send(subCategories);
+  } catch (error) {
+    console.error('Error fetching subcategories:', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
 
 
 
