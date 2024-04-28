@@ -31,6 +31,7 @@ async function run() {
 
 
     const artCollection = client.db('artDB').collection('art');
+    const userCollection = client.db('artDB').collection('user');
 
     app.get('/art/:id', async (req, res) =>{
       const id = req.params.id;
@@ -54,6 +55,16 @@ async function run() {
       res.send(result);
     }
   )
+
+
+  // user crud
+  app.post('/user', async(req, res) =>{
+    const user = req.body;
+    console.log(user);
+    const result = await userCollection.insertOne(user);
+    res.send(result);
+  })
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
