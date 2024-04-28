@@ -56,6 +56,14 @@ async function run() {
     }
   )
 
+  app.delete('/art/:id', async(req, res) => {
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)}
+    const result = await artCollection.deleteOne(query);
+    res.send(result)
+
+  })
+
 
   // user crud
   app.get('/user', async(req,res)=>{
@@ -76,7 +84,9 @@ async function run() {
     console.log(user);
     const result = await userCollection.insertOne(user);
     res.send(result);
-  })
+  });
+
+
 
 
     // Send a ping to confirm a successful connection
