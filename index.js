@@ -57,6 +57,8 @@ async function run() {
       res.send(result);
     })
 
+
+
     app.post('/art', async(req, res) =>{
       const newArt = req.body;
       console.log(newArt);
@@ -138,6 +140,16 @@ app.get('/subcategories', async (req, res) => {
     res.status(500).send('Internal server error');
   }
 });
+
+app.get('/artbysubcategory/:subcategory', async (req, res) => {
+  const subcategory = req.params.subcategory; // Extract the subcategory from the route parameter
+  const query = { subcategory: subcategory.trim() }; // Ensure the query matches the subcategory
+  const result = await artCollection.find(query).toArray(); // Find art items with the specified subcategory
+  res.send(result); // Return the matching art items
+});
+
+
+
 
 
 
